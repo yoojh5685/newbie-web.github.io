@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # NEWbiE GitHub Pages 설정
 
 이 폴더의 파일들을 GitHub Pages에 업로드하면 Universal Link가 작동합니다.
@@ -36,3 +37,6 @@
 ## 사용법
 GitHub Pages 배포 후 다음과 같이 사용:
 - `https://username.github.io/newbie-app/article/123?title=기사제목`
+=======
+# newbie-web.github.io
+>>>>>>> 57c83f08648672247f94ba01f6db8a96531b6128
