@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEWbiE - 뉴스 요약 앱</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        
+        .container {
+            text-align: center;
+            max-width: 400px;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+        
+        .logo {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+        
+        .download-btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: #000;
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .article-info {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .article-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 0.5rem;
+        }
+        
+        .article-subtitle {
+            opacity: 0.8;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">📰</div>
+        <h1>NEWbiE</h1>
+        
+        <div id="article-info" class="article-info" style="display: none;">
+            <div class="article-title" id="article-title"></div>
+            <div class="article-subtitle">NEWbiE 앱에서 자세히 보기</div>
+        </div>
+        
+        <p>복잡한 뉴스를 쉽고 빠르게!<br>
+        AI가 요약해주는 스마트 뉴스 앱</p>
+        
+        <a href="https://apps.apple.com/kr/app/newbie/id6736697572" class="download-btn">
+            📱 App Store에서 다운로드
+        </a>
+    </div>
+
+    <script>
+        // URL에서 기사 ID와 제목 추출
+        const urlParams = new URLSearchParams(window.location.search);
+        const articleId = window.location.pathname.split('/article/')[1] || urlParams.get('id');
+        const articleTitle = urlParams.get('title');
+        
+        // 기사 정보가 있으면 표시
+        if (articleTitle) {
+            document.getElementById('article-title').textContent = decodeURIComponent(articleTitle);
+            document.getElementById('article-info').style.display = 'block';
+        }
+        
+        // iOS에서 접속한 경우 앱 열기 시도
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+        
+        if (isIOS && articleId) {
+            // Universal Link로 앱 열기 시도
+            const appURL = `newbie://article/${articleId}`;
+            
+            // 앱 열기 시도
+            window.location.href = appURL;
+            
+            // 3초 후에도 페이지에 있으면 App Store로 이동
+            setTimeout(() => {
+                if (document.visibilityState === 'visible') {
+                    window.location.href = 'https://apps.apple.com/kr/app/newbie/id6736697572';
+                }
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
